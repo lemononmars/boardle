@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { CharState } from "./Wordle"
+  import { CharState } from "./Boardle"
 
   const example1 = [
     { correct: CharState.Correct, char: "B" },

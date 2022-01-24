@@ -2,6 +2,8 @@
 
 [Wordle](https://www.powerlanguage.co.uk/wordle/) clone, but for boardgamers.
 
+Data taken from [Recommend.Games](https://gitlab.com/recommend.games/bgg-ranking-historicals)
+
 ## TODOs
 
 - [ ] Fix bugs
