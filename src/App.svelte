@@ -14,7 +14,7 @@
   const title = "Boardle"
 
   const menuItems = [
-    { name: "Found a bug?", url: "https://twitter.com/SakulbuthE/status/1485679790627880960" },
+    { name: "Found a bug?", url: "https://twitter.com/SakulbuthE/status/1485680283198562307" },
     { name: "Try Mathdle", url: "https://lemononmars.github.io/mathdle/"},
     { name: "Original (Thwordle)", url: "https://github.com/narze/thwordle"},
     { name: "Github", url: "https://github.com/lemononmars/boardle" },
