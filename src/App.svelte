@@ -18,8 +18,8 @@
     { name: "Github", url: "https://github.com/lemononmars/boardle" },
   ]
 
-  const description = "Wordle clone, but it's board game."
-  const imageUrl = ""
+  const description = "Wordle clone, but for boardgamers."
+  const imageUrl = "https://i.imgur.com/8HKY9O7.png"
 
   const gtagId = "G-YTV7TZ3EMC"
   const alphabetsRows = groupArr(
@@ -205,7 +205,7 @@
             on:click={() => (input += alphabet)}
             class={colors[correctState] +
               " " +
-              "flex-grow h-12 border-solid border-2 flex items-center justify-center m-0.5 text-lg font-bold rounded text-black"}
+              "flex-grow w-10 h-12 border-solid border-2 flex items-center justify-center m-0.5 text-lg font-bold rounded text-black"}
           >
             {alphabet}
           </button>
