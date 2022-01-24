@@ -2,6 +2,8 @@
 
 [Wordle](https://www.powerlanguage.co.uk/wordle/) clone, but for boardgamers.
 
+Original repo is https://github.com/narze/thwordle
+
 Data taken from [Recommend.Games](https://gitlab.com/recommend.games/bgg-ranking-historicals)
 
 ## TODOs

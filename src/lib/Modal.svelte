@@ -108,7 +108,7 @@
                 (Just like
                 <a target="_blank" href="https://www.powerlanguage.co.uk/wordle" class="underline"
                   >Wordle</a
-                > , but for board gamers.)
+                > , but for boardgamers.)
               </p>
             </div>
             <hr class="my-2" />

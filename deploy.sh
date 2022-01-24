@@ -6,8 +6,8 @@ cd dist
 
 git init
 git add -A
-git commit -m 'deploy'
+git commit -m 'deploy to gh-pages'
 
-git push -f https://github.com/lemononmars/mathdle.git master
+git push -f https://github.com/lemononmars/boardle.git master
 
 cd -

@@ -6,6 +6,7 @@
   import { CharState, validateTitle, getShareResults, layout } from "./lib/Boardle"
   import titles1000 from "./lib/bgg1000shuffle"
   import { tick } from "svelte"
+  import { fade, scale } from "svelte/transition";
   import Modal from "./lib/Modal.svelte"
   import { store } from "./lib/store"
 
@@ -13,7 +14,8 @@
   const title = "Boardle"
 
   const menuItems = [
-    { name: "Report a bug?", url: "https://m.me/sakulbuth" },
+    { name: "Found a bug?", url: "https://m.me/sakulbuth" },
+    { name: "Try Mathdle", url: "https://lemononmars.github.io/mathdle/"},
     { name: "Original (Thwordle)", url: "https://github.com/narze/thwordle"},
     { name: "Github", url: "https://github.com/lemononmars/boardle" },
   ]
@@ -34,8 +36,6 @@
   const dateIndex = Math.floor((now - epochMs) / msInDay)
 
   let input = ""
-  let difficulty = 0
-  // to be adjusted:
   // for now, choose one with title length between 5 and 12
   let solutionInfo = titles1000.filter((t)=> t.name.length >=5 && t.name.length <= 12)[dateIndex]
   let solution = solutionInfo.name.toUpperCase()
@@ -145,7 +145,7 @@
 
 <main class="w-full h-screen py-4 flex flex-col items-center">
   <h1 class="text-6xl text-green-400 flex flex-col mb-4">
-    <span>{title}<span class="text-sm text-gray-400 ml-2">Beta</span></span>
+     <span>{title}<span class="text-sm text-gray-400 ml-2">Beta</span></span>
   </h1>
 
   Day {dateIndex + 1}
@@ -157,10 +157,10 @@
     {#each attempts as input}
       <div class="flex justify-center my-1">
         {#each validateTitle(input, solution) as { correct, char }}
-          <div
+          <div in:scale="{{duration: 1000}}" out:fade
             class={`${
               colors[correct] || "bg-white"
-            } ${solutionLength > 6? "attempt-box-sm": "attempt-box-lg"} border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
+            }  ${solutionLength > 6? "attempt-box-sm": "attempt-box-lg"} border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
       rounded`}
           >
             {char ?? ""}
@@ -172,7 +172,7 @@
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _, i}
           <div
-            class={`bg-white ${solutionLength > 6? "attempt-box-sm": "attempt-box-lg"} border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded`}
+            class={`animate-pulse bg-gray-200 ${solutionLength > 6? "attempt-box-sm": "attempt-box-lg"} border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded`}
           >
             {splittedInput[i] || ""}
           </div>
