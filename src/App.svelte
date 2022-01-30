@@ -4,7 +4,12 @@
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
   import { CharState, validateTitle, getShareResults, layout } from "./lib/Boardle"
+  import words5 from "./lib/5letter"
+  import words6 from "./lib/6letter"
+  import words7 from "./lib/7letter"
+  import words8 from "./lib/8letter"
   import titles1000 from "./lib/bgg1000shuffle"
+  import titles from "./lib/bgtitles"
   import { tick } from "svelte"
   import { fade, scale } from "svelte/transition";
   import Modal from "./lib/Modal.svelte"
@@ -12,6 +17,7 @@
 
   const url = "https://lemononmars.github.io/boardle"
   const title = "Boardle"
+  const dict = [words5, words6, words7, words8]
 
   const menuItems = [
     { name: "Found a bug?", url: "https://twitter.com/SakulbuthE/status/1485680283198562307" },
@@ -25,8 +31,8 @@
 
   const gtagId = "G-YTV7TZ3EMC"
   const alphabetsRows = groupArr(
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split(""),
-    9
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),
+    7
   ).map((row) => row.join(""))
 
   // January 24, 2022 Game Epoch
@@ -34,12 +40,12 @@
   const now = Date.now()
   const msInDay = 86400000
   const dateIndex = Math.floor((now - epochMs) / msInDay)
+  const starSymbols = ['✰', '⭐']
 
   let input = ""
   // for now, choose one with title length between 5 and 12
-  let solutionInfo = titles1000.filter((t)=> t.name.length >=5 && t.name.length <= 12)[dateIndex]
-  let solution = solutionInfo.name.toUpperCase()
-  let solutionUrl = "https://boardgamegeek.com/" + solutionInfo.url
+  let solutionInfo = titles1000[dateIndex % titles1000.length]
+  let solution = solutionInfo.reduced
   let attempts: string[] = $store.data[dateIndex]?.attempts || []
   let validations = attempts.map((word)=>validateTitle(word, solution))
   let gameEnded: boolean = $store.data[dateIndex]?.win || false
@@ -48,7 +54,7 @@
   let copied = false
 
   $: solutionLength = solution.length
-  $: input = input.replace(/[^a-zA-Z0-9]/g, "").toUpperCase()
+  $: input = input.replace(/[^a-zA-Z]/g, "").toUpperCase()
   $: splittedInput = input.split("")
   $: alphabetsLayoutRows = layout(alphabetsRows, validations.flat())
   $: {
@@ -56,6 +62,11 @@
       {attempts, win: gameEnded}
     }})
   }
+  $: hasAnotherTitle = attempts.reduce((prev, att, idx) => 
+    (idx < attempts.length-1 && titles.includes(att))? prev+1:prev, 0
+  )
+  $: stars = (gameEnded? 1:0) + (gameEnded && attempts.length <= 6? 1:0) + (hasAnotherTitle > 0? 1:0)
+  $: starString = '⭐⭐⭐'.slice(3-stars) + '✰✰✰'.slice(stars)
 
   const colors = {
     [CharState.Correct]: "bg-green-500 border-green-500",
@@ -84,6 +95,11 @@
     // Check if the length is valid
     if (input.length != solutionLength) {
       alert("Please match the input length")
+      return
+    }
+
+    if (!dict[input.length - 5].includes(input.toLowerCase()) && !titles.includes(input)) {
+      alert("Your guess is not in the dictionary")
       return
     }
 
@@ -116,7 +132,7 @@
     const results = getShareResults(validations)
 
     navigator.clipboard.writeText(
-      `#Boardle Day ${dateIndex + 1} (${results.length} attempts)\n\n${results.join("\n")}`
+      `#Boardle Day ${dateIndex + 1} (${results.length} attempts)\n ${starString}\n\n ${results.join("\n")}`
     )
 
     copied = true
@@ -150,9 +166,6 @@
 
   Day {dateIndex + 1}
 
-  <!-- DEBUG: Solution word -->
-  <!-- <input type="text" class="border" bind:value={solution} /> -->
-  <!-- Check Solution -->
   <div class="attempts grow overflow-y-auto" bind:this={attemptsContainer}>
     {#each attempts as input}
       <div class="flex justify-center my-1">
@@ -160,7 +173,7 @@
           <div in:scale="{{duration: 1000}}" out:fade
             class={`${
               colors[correct] || "bg-white"
-            }  ${solutionLength > 6? "attempt-box-sm": "attempt-box-lg"} border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
+            } ${solutionLength > 6? "attempt-box-sm": "attempt-box-lg"} border-solid border-2 ${titles.includes(input)?"text-gray-300":""} flex items-center justify-center mx-0.5 text-lg font-bold
       rounded`}
           >
             {char ?? ""}
@@ -193,7 +206,7 @@
       autofocus
     />
   {:else}
-    <span class="text-lg text-blue-400 ml-2"> View <a target="_blank" href={`${solutionUrl}`} class="underline"> {solution} ({solutionInfo.year})</a> on Board Game Geek</span>
+    <span class="text-lg text-blue-400 ml-2"> View <a target="_blank" href={`https://boardgamegeek.com/${solutionInfo.url}`} class="underline"> {solutionInfo.name} ({solutionInfo.year})</a> on Board Game Geek</span>
   {/if}
 
   <!-- Layout -->
@@ -238,6 +251,14 @@
           class="flex text-lg items-center justify-center rounded border mx-2 p-3 bg-red-300 border-red-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
         >
           Clear</button
+        >
+        <button
+          on:click={() => {
+            modal = true
+          }}
+          class="flex text-lg items-center justify-center rounded border mx-2 p-3 bg-pink-300 border-pink-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+        >
+          Rules</button
         >
       </div>
     {/if}

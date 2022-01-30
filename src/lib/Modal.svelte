@@ -118,13 +118,25 @@
             <div class="mt-2">
               <p class="text-sm text-gray-500">
                 <ul class="list-decimal text-sm text-gray-500">
-                  <li>You can enter any strings of letters and numbers as a guess. It doesn't have to be a valid word.</li>
+                  <li>Each guess must either be a valid word, or a board game's title.</li>
                   <li>The board game is in top 1000 on Board Game Geek, as of January 1, 2022
                   (data taken from <a target="_blank" href="https://gitlab.com/recommend.games/bgg-ranking-historicals" class="underline">Recommend.Games</a>)</li>
-                  <li>All special characters are removed (e.g. ',-!?&, so "No, Thanks!" becomes "NOTHANKS" and "Heaven & Ale" becomes "HEAVENALE".)</li>
+                  <li>All numbers and special characters are removed (e.g. ',-!?&, so "No, Thanks!" becomes "NOTHANKS" and "Heaven & Ale" becomes "HEAVENALE".)</li>
                   <li>All characters after a colon (:), including the colon itself, is also removed (e.g. "Android: Netrunner" becomes "ANDROID".)</li>
                   <li>All words in parentheses are removed (e.g. "(Second Edition)"). </li>
-                  <li>Board games with expansions may appear on the list several times under the same title (e.g. "Dominion", "Dominion: Intruge", "Dominion: Seaside" are all reduced to "Dominion".)</li>
+                  <li>The complete list, sorted alphabetically, of titles is avaiable <a target="_blank" href="https://github.com/lemononmars/boardle/blob/main/src/lib/bgtitles.ts" class="underline">here</a></li>
+                </ul>
+            </div>
+            <hr class="my-2" />
+            <h3 class="text-base leading-6 font-medium text-gray-900" id="modal-title">
+              How to get stars?
+            </h3>
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">
+                <ul class="list-decimal text-sm text-gray-500">
+                  <li>One ⭐ for winning.</li>
+                  <li>One ⭐ for winning in 6 guesses or fewer.</li>
+                  <li>One ⭐ for using another board game's title as a guess.</li>
                 </ul>
             </div>
             <hr class="my-2" />

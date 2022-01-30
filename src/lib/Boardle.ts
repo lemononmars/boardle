@@ -35,26 +35,14 @@ export function validateTitle(word: string, solution: string) {
   solutionSplitted.forEach((_sChar, idx) => {
     const char = inputSplitted[idx]
 
-    if (char) {
-      // If matching character and in correct position
-      if (
-        // If the solution has normalized char in other position, but only once
-        solutionSplitted.includes(char)
-      ) {
-        // Remove one matching char from solution, so that it cannot be matched again
-        const idx1 = solutionSplitted.indexOf(char)
-        let correctChar
+    if (!char || !solutionSplitted.includes(char)) return
+    
+    const idx1 = solutionSplitted.indexOf(char)
 
-        if (idx1 !== -1) {
-          correctChar = solutionSplitted[idx1]
+    solutionSplitted[idx1] = null
+    inputSplitted[idx] = null
 
-          solutionSplitted[idx1] = null
-          inputSplitted[idx] = null
-        }
-
-        output[idx] = { correct: CharState.OutOfPlace, char: correctChar }
-      }
-    }
+    output[idx].correct =  CharState.OutOfPlace
   })
 
   return output
