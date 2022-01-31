@@ -45,7 +45,7 @@
   let input = ""
   // for now, choose one with title length between 5 and 12
   let solutionInfo = titles1000[dateIndex % titles1000.length]
-  let solution = solutionInfo.reduced
+  let solution = solutionInfo.reduced.toUpperCase()
   let attempts: string[] = $store.data[dateIndex]?.attempts || []
   let validations = attempts.map((word)=>validateTitle(word, solution))
   let gameEnded: boolean = $store.data[dateIndex]?.win || false
@@ -63,7 +63,7 @@
     }})
   }
   $: hasAnotherTitle = attempts.reduce((prev, att, idx) => 
-    (idx < attempts.length-1 && titles.includes(att))? prev+1:prev, 0
+    (idx < attempts.length-1 && titles.some((t)=>t.reduced === att))? prev+1:prev, 0
   )
   $: stars = (gameEnded? 1:0) + (gameEnded && attempts.length <= 6? 1:0) + (hasAnotherTitle > 0? 1:0)
   $: starString = '⭐⭐⭐'.slice(3-stars) + '✰✰✰'.slice(stars)
@@ -94,12 +94,12 @@
 
     // Check if the length is valid
     if (input.length != solutionLength) {
-      alert("Please match the input length")
+      alert("Please match the input length.")
       return
     }
 
-    if (!dict[input.length - 5].includes(input.toLowerCase()) && !titles.includes(input)) {
-      alert("Your guess is not in the dictionary")
+    if (!dict[input.length - 5].includes(input.toLowerCase()) && !titles.some((t)=> t.reduced === input.toLowerCase())) {
+      alert("Your guess is not in the dictionary.")
       return
     }
 
@@ -110,12 +110,7 @@
     validations = [...validations, validation]
 
     // if all validation is correct
-    let win = true
-    validation.forEach((v) => {
-      if (v.correct !== CharState.Correct) {
-        win = false
-      }
-    })
+    let win = !validation.some((v) => v.correct !== CharState.Correct)
 
     if (win) {
       alert("You won!")
