@@ -4,7 +4,7 @@ set -e
 npm run build
 
 git add -A
-git commit -m 'reduce solution set to only top 1000 and add complete bg dictionary'
+git commit -m 'fix star calculation and add feedback'
 git push -f https://github.com/lemononmars/boardle.git main
 
 cd dist

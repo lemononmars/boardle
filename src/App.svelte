@@ -63,7 +63,7 @@
     }})
   }
   $: hasAnotherTitle = attempts.reduce((prev, att, idx) => 
-    (idx < attempts.length-1 && titles.some((t)=>t.reduced === att))? prev+1:prev, 0
+    (idx < attempts.length-1 && titles.some((t)=>t.reduced === att.toLowerCase()))? prev+1:prev, 0
   )
   $: stars = (gameEnded? 1:0) + (gameEnded && attempts.length <= 6? 1:0) + (hasAnotherTitle > 0? 1:0)
   $: starString = '⭐⭐⭐'.slice(3-stars) + '✰✰✰'.slice(stars)
@@ -168,7 +168,7 @@
           <div in:scale="{{duration: 1000}}" out:fade
             class={`${
               colors[correct] || "bg-white"
-            } ${solutionLength > 6? "attempt-box-sm": "attempt-box-lg"} border-solid border-2 ${titles.includes(input)?"text-gray-300":""} flex items-center justify-center mx-0.5 text-lg font-bold
+            } ${solutionLength > 6? "attempt-box-sm": "attempt-box-lg"} border-solid border-2 ${titles.some((t)=>t.reduced === input.toLowerCase())?"text-gray-300":""} flex items-center justify-center mx-0.5 text-lg font-bold
       rounded`}
           >
             {char ?? ""}
@@ -202,6 +202,10 @@
     />
   {:else}
     <span class="text-lg text-blue-400 ml-2"> View <a target="_blank" href={`https://boardgamegeek.com/${solutionInfo.url}`} class="underline"> {solutionInfo.name} ({solutionInfo.year})</a> on Board Game Geek</span>
+
+    <span> {starSymbols[+gameEnded]} - winning </span>
+    <span> {starSymbols[+ (gameEnded && attempts.length <= 6)]} - winning in 6 guesses or fewer</span>
+    <span> {starSymbols[+ (hasAnotherTitle > 0 || attempts.length == 1)]} - use another board game's title as a guess</span>
   {/if}
 
   <!-- Layout -->
