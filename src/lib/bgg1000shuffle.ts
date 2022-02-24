@@ -31,7 +31,7 @@ const titles1000 = [
    {name:'On Mars',reduced:'onmars',year:2020,url:'/boardgame/184267/mars'},
    {name:'Yokohama',reduced:'yokohama',year:2016,url:'/boardgame/196340/yokohama'},
    {name:'Honsho«',reduced:'honshu',year:2016,url:'/boardgame/207336/honshu'},
-   {name:'Gugong',reduced:'gugong',year:2018,url:'/boardgame/250458/gugng'},
+   {name:'Gugong',reduced:'gugong',year:2018,url:'/boardgame/250458/gugng'},
    {name:'Lisboa',reduced:'lisboa',year:2017,url:'/boardgame/161533/lisboa'},
    {name:'Tapestry',reduced:'tapestry',year:2019,url:'/boardgame/286096/tapestry'},
    {name:'Shipyard',reduced:'shipyard',year:2009,url:'/boardgame/55600/shipyard'},
