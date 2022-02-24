@@ -4,7 +4,7 @@ set -e
 npm run build
 
 git add -A
-git commit -m 'fix star calculation and add feedback'
+git commit -m 'fix typo for japanese name'
 git push -f https://github.com/lemononmars/boardle.git main
 
 cd dist
