@@ -65,7 +65,7 @@
   $: hasAnotherTitle = attempts.reduce((prev, att, idx) => 
     (idx < attempts.length-1 && titles.some((t)=>t.reduced === att.toLowerCase()))? prev+1:prev, 0
   )
-  $: stars = (gameEnded? 1:0) + (gameEnded && attempts.length <= 6? 1:0) + (hasAnotherTitle > 0? 1:0)
+  $: stars = (gameEnded? 1:0) + (gameEnded && attempts.length <= 6? 1:0) + (hasAnotherTitle > 0 || attempts.length == 1? 1:0)
   $: starString = '⭐⭐⭐'.slice(3-stars) + '✰✰✰'.slice(stars)
 
   const colors = {
@@ -127,7 +127,7 @@
     const results = getShareResults(validations)
 
     navigator.clipboard.writeText(
-      `#Boardle Day ${dateIndex + 1} (${results.length} attempts)\n ${starString}\n\n ${results.join("\n")}`
+      `#Boardle Day ${dateIndex + 1} (${results.length} attempts)\n${starString}\n\n ${results.join("\n")}`
     )
 
     copied = true
